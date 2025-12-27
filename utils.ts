@@ -1,6 +1,4 @@
 
-import { Participant } from './types';
-
 export const generateId = () => Math.random().toString(36).substr(2, 9);
 
 export const parseNames = (text: string): string[] => {
@@ -10,7 +8,6 @@ export const parseNames = (text: string): string[] => {
     .filter(name => name !== '');
 };
 
-// Fix: Removed unnecessary comma in generic declaration to improve type inference compatibility
 export const shuffleArray = <T>(array: T[]): T[] => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {

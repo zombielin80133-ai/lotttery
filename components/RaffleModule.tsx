@@ -27,7 +27,7 @@ const RaffleModule: React.FC<Props> = ({ participants, raffleRounds, setRaffleRo
 
     setIsSpinning(true);
     let counter = 0;
-    const maxSpin = 20 + Math.floor(Math.random() * 10);
+    const maxSpin = 25;
 
     spinInterval.current = window.setInterval(() => {
       const randomName = pool[Math.floor(Math.random() * pool.length)];
@@ -51,38 +51,35 @@ const RaffleModule: React.FC<Props> = ({ participants, raffleRounds, setRaffleRo
         setIsSpinning(false);
         setCurrentCandidate('');
       }
-    }, 100);
+    }, 80);
   };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-end gap-6 border-b border-slate-50 pb-6">
         <div className="flex-1 space-y-4">
-          <h2 className="text-xl font-semibold text-slate-800">自動抽籤</h2>
+          <h2 className="text-xl font-semibold text-slate-800">🎡 自動抽籤</h2>
           <div className="flex flex-wrap gap-4 items-center">
             <div className="flex items-center space-x-2">
-              <label className="text-sm text-slate-600">每次抽取人數:</label>
+              <label className="text-sm text-slate-600">抽取人數:</label>
               <input type="number" min="1" max="50" value={drawCount} onChange={(e) => setDrawCount(Number(e.target.value))} className="w-16 p-1.5 border border-slate-200 rounded text-center" />
             </div>
-            <label className="flex items-center space-x-2 cursor-pointer group">
-              <input type="checkbox" className="sr-only peer" checked={allowRepeat} onChange={() => setAllowRepeat(!allowRepeat)} />
-              <div className="w-10 h-6 bg-slate-200 rounded-full peer peer-checked:bg-indigo-600 relative after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 peer-checked:after:translate-x-full transition-all"></div>
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" checked={allowRepeat} onChange={() => setAllowRepeat(!allowRepeat)} className="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500" />
               <span className="text-sm font-medium text-slate-600">允許重複中籤</span>
             </label>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button onClick={startDraw} disabled={isSpinning || participants.length === 0} className={`px-8 py-3 rounded-xl font-bold text-lg shadow-lg transition-all ${isSpinning ? 'bg-slate-100 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:scale-105 active:scale-95'}`}>
-            {isSpinning ? '抽籤中...' : '開始抽籤'}
-          </button>
-        </div>
+        <button onClick={startDraw} disabled={isSpinning || participants.length === 0} className={`px-8 py-3 rounded-xl font-bold text-lg shadow-lg transition-all ${isSpinning ? 'bg-slate-100 text-slate-400' : 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:scale-105 active:scale-95'}`}>
+          {isSpinning ? '抽籤中...' : '開始抽籤'}
+        </button>
       </div>
       <div className="flex flex-col items-center justify-center min-h-[200px] bg-slate-50 rounded-2xl border border-slate-100 border-dashed">
-        {isSpinning ? <div className="text-6xl font-black text-indigo-600 animate-bounce">{currentCandidate}</div> : <div className="text-slate-400 text-center py-8"><div className="text-5xl opacity-20 mb-2">🎰</div><p>{participants.length === 0 ? '請先加入名單' : '準備抽籤'}</p></div>}
+        {isSpinning ? <div className="text-6xl font-black text-indigo-600 animate-pulse">{currentCandidate}</div> : <div className="text-slate-400 text-center py-8"><div className="text-5xl opacity-20 mb-2">🎰</div><p>準備好就點擊按鈕</p></div>}
       </div>
       {raffleRounds.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-lg font-bold text-slate-700">中籤歷史 ({raffleRounds.length} 輪)</h3>
+          <h3 className="text-lg font-bold text-slate-700">中籤歷史</h3>
           {raffleRounds.map((round, idx) => (
             <div key={round.id} className={`p-4 rounded-xl border ${idx === 0 ? 'bg-indigo-50 border-indigo-200' : 'bg-white border-slate-100'} animate-in fade-in slide-in-from-top-2`}>
               <div className="flex justify-between items-center mb-3">
