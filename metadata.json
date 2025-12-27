@@ -1,0 +1,5 @@
+{
+  "name": "Smart Event Planner Hub",
+  "description": "A professional tool for event organizers featuring animated lucky draws with duplicate detection and automated participant grouping with CSV export capabilities.",
+  "requestFramePermissions": []
+}
